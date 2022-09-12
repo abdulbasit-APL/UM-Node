@@ -1,0 +1,5 @@
+{
+    "authMiddleware": {
+        "GET": ["/", "/users"]
+    }
+}
