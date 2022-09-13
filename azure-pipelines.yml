@@ -1,0 +1,82 @@
+# Testing CICD Pipeline for Testing
+trigger:
+  branches:
+    include:
+      - main
+      - master
+      - release/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+container: shiftleft/sast-scan:latest
+
+
+
+#variables:
+#  - group: angular-app-vars
+
+stages:
+  - stage: 'PreDeployment'
+    displayName: 'Security Code Analysis'
+    jobs:
+      - job: 'risk_report'
+        displayName: 'Risk Report'
+        steps:
+          - task: WhiteSource@21
+            inputs:
+              cwd: '$(System.DefaultWorkingDirectory)'
+              extensions: '.json .js .ts .css .html'
+              projectName: 'angularApp'             
+      - job: 'Snyk_Scan'
+        displayName: 'Snyk Report'
+        steps:
+          - task: SnykSecurityScan@1
+            inputs:
+              serviceConnectionEndpoint: 'snyk'
+              testType: 'app'
+              severityThreshold: 'medium'
+              monitorWhen: 'always'
+              failOnIssues: false
+              projectName: 'angularApp'
+      - job: 'Web Goat'
+        displayName: "AppThreat SAST and Dep scan"
+        continueOnError: "true"
+        steps:
+          - script: docker pull quay.io/appthreat/sast-scan
+            displayName: "Download sast-scan"
+          - script: |
+              docker run -e "WORKSPACE=https://github.com/AppThreat/WebGoat/blob/$(Build.SourceVersion)" \
+                 -v "$(Build.SourcesDirectory):/src:cached" \
+                 -v "$(Build.ArtifactStagingDirectory):/reports:cached" \
+                 quay.io/appthreat/sast-scan scan --src /src \
+                 --out_dir /reports/CodeAnalysisLogs
+          - task: PublishBuildArtifacts@1
+            displayName: "Publish analysis logs"
+            inputs:
+              PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
+              ArtifactName: "CodeAnalysisLogs"
+              publishLocation: "Container"
+      #- job: 'lint_tests'
+      #  displayName: 'Lint Tests'
+      #  steps:
+      #    - script: |
+      #        docker pull github/super-linter:latest
+      #        docker run -e RUN_LOCAL=true -e LOG_LEVEL=TRACE -v $(System.DefaultWorkingDirectory):/tmp/lint github/super-linter
+  - stage: 'Build_Publish_Artifact'
+    displayName: 'Build The Artifact'
+    jobs:
+      - job: 'Build_Publish_Artifact'
+        displayName: 'Building The Artifact'
+        steps:
+            
+            
+          
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '10.x'
+              #sonarQubeRunAnalysis: true
+            displayName: 'Install Node.js'
+          - script: |
+              npm install --ignore-scripts --verbose
+              npm run build
+              npm run build:war
