@@ -48,12 +48,12 @@ stages:
               docker run -e "WORKSPACE=https://github.com/AppThreat/WebGoat/blob/$(Build.SourceVersion)" -v "$(Build.SourcesDirectory):/src:cached" -v "$(Build.ArtifactStagingDirectory):/reports:cached" quay.io/appthreat/sast-scan scan --src /src --out_dir /reports/CodeAnalysisLogs
         continueOnError: "true"
 
-      #- job: 'lint_tests'
-      #  displayName: 'Lint Tests'
-      #  steps:
-      #    - script: |
-      #        docker pull github/super-linter:latest
-      #        docker run -e RUN_LOCAL=true -e LOG_LEVEL=TRACE -v $(System.DefaultWorkingDirectory):/tmp/lint github/super-linter
+      - job: 'lint_tests'
+        displayName: 'super-linter validation'
+        steps:
+          - script: |
+              docker pull github/super-linter:latest
+              docker run -e RUN_LOCAL=true -e LOG_LEVEL=TRACE -v $(System.DefaultWorkingDirectory):/tmp/lint github/super-linter
   - stage: 'Build_Publish_Artifact'
     displayName: 'Build The Artifact'
     jobs:
@@ -70,6 +70,6 @@ stages:
               #sonarQubeRunAnalysis: true
             displayName: 'Install Node.js'
           - script: |
-              npm install --ignore-scripts --verbose
-              npm run build
-              npm run build:war
+              npm install --verbose
+              npm run lint
+              #npm run build:war
