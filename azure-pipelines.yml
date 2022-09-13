@@ -47,6 +47,17 @@ stages:
           - script: |  
               docker run -e "WORKSPACE=https://github.com/AppThreat/WebGoat/blob/$(Build.SourceVersion)" -v "$(Build.SourcesDirectory):/src:cached" -v "$(Build.ArtifactStagingDirectory):/reports:cached" quay.io/appthreat/sast-scan scan --src /src --out_dir /reports/CodeAnalysisLogs
         continueOnError: "true"
+      
+      - job: 'SAST_SCAN'
+        displayName: 'SAST Stats'
+        steps:
+          scan --build --type java,depscan --out_dir $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
+        env:
+          WORKSPACE: https://github.com/AppThreat/WebGoat/blob/$(Build.SourceVersion)
+          GITHUB_TOKEN: $(GITHUB_TOKEN)
+          SCAN_DEBUG_MODE: debug
+        displayName: "Perform ShiftLeft scan"
+        continueOnError: "true"  
 
       #- job: 'lint_tests'
       #  displayName: 'Lint Tests'
