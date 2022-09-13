@@ -86,6 +86,7 @@ stages:
             failOnCVSS: 8 # Fail the build if vulnerabilities with CVSS score higher than 8 are discovered
             format: 'JUNIT' # Format of scan result report
             additionalArguments: '--scan $(Build.SourcesDirectory)'
+            dependencyCheckVersion: '7.1.2'
         - task: PublishTestResults@2
           displayName: 'Publish OWASP Dependency Check security scan results'
           inputs:
