@@ -8,7 +8,7 @@ trigger:
 
 pool:
   vmImage: "ubuntu-latest"
-  container: checkmarx/kics:debian
+  container: shiftleft/sast-scan:latest
 
 
 #variables:
@@ -45,7 +45,7 @@ stages:
           - script: docker pull quay.io/appthreat/sast-scan
             displayName: "Download sast-scan"
           - script: |  
-              docker run -e "GITHUB_TOKEN=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" -v "$(Build.SourcesDirectory):/src:cached" -v "$(Build.ArtifactStagingDirectory):/reports:cached" quay.io/appthreat/sast-scan scan --src /src --out_dir /reports/CodeAnalysisLogs
+              docker run -e "WORKSPACE=https://github.com/AppThreat/WebGoat/blob/$(Build.SourceVersion)" -v "$(Build.SourcesDirectory):/src:cached" -v "$(Build.ArtifactStagingDirectory):/reports:cached" quay.io/appthreat/sast-scan scan --src /src --out_dir /reports/CodeAnalysisLogs
         continueOnError: "true"
 
       #- job: 'lint_tests'
