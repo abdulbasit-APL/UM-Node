@@ -8,7 +8,7 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-container: shiftleft/sast-scan:latest
+  container: shiftleft/sast-scan:latest
 
 
 
@@ -38,7 +38,7 @@ stages:
               monitorWhen: 'always'
               failOnIssues: false
               projectName: 'angularApp'
-      - job: 'Web Goat'
+      - job: 'Web_Goat'
         displayName: "AppThreat SAST and Dep scan"
         continueOnError: "true"
         steps:
