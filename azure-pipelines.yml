@@ -56,7 +56,6 @@ stages:
           WORKSPACE: https://github.com/AppThreat/WebGoat/blob/$(Build.SourceVersion)
           GITHUB_TOKEN: $(GITHUB_TOKEN)
           SCAN_DEBUG_MODE: debug
-
         continueOnError: "true"  
 
       #- job: 'lint_tests'
