@@ -7,9 +7,8 @@ trigger:
       - release/*
 
 pool:
-  vmImage: 'ubuntu-latest'
-  container: shiftleft/sast-scan:latest
-
+  vmImage: "ubuntu-latest"
+  container: checkmarx/kics:debian
 
 
 #variables:
@@ -38,24 +37,19 @@ stages:
               monitorWhen: 'always'
               failOnIssues: false
               projectName: 'angularApp'
-      - job: 'Web_Goat'
-        displayName: "AppThreat SAST and Dep scan"
-        continueOnError: "true"
+      
+      
+      - job: 'WebGoat_Test'
+        displayName: 'WebGoat Stats'
         steps:
           - script: docker pull quay.io/appthreat/sast-scan
             displayName: "Download sast-scan"
           - script: |
-              docker run -e "WORKSPACE=https://github.com/AppThreat/WebGoat/blob/$(Build.SourceVersion)" \
-                 -v "$(Build.SourcesDirectory):/src:cached" \
-                 -v "$(Build.ArtifactStagingDirectory):/reports:cached" \
-                 quay.io/appthreat/sast-scan scan --src /src \
-                 --out_dir /reports/CodeAnalysisLogs
-          - task: PublishBuildArtifacts@1
-            displayName: "Publish analysis logs"
-            inputs:
-              PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
-              ArtifactName: "CodeAnalysisLogs"
-              publishLocation: "Container"
+              #/app/bin/kics scan --ci -p ${PWD} -o ${PWD}
+              #cat results.json
+              #docker pull checkmarx/kics:latest​​​​
+              #ls -al ${PWD}
+              docker run -e "GITHUB_TOKEN=$(GITHUB_TOKEN)" -v "$(Build.SourcesDirectory):/src:cached" -v "$(Build.ArtifactStagingDirectory):/reports:cached" quay.io/appthreat/sast-scan scan --src /src --out_dir /reports/CodeAnalysisLogs
       #- job: 'lint_tests'
       #  displayName: 'Lint Tests'
       #  steps:
@@ -68,6 +62,7 @@ stages:
       - job: 'Build_Publish_Artifact'
         displayName: 'Building The Artifact'
         steps:
+          #- task: SonarCloudPrepare@1
             
             
           
