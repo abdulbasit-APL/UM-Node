@@ -39,16 +39,7 @@ stages:
               projectName: 'angularApp'
       
       
-      - job: 'OWASP_Scan'
-        displayName: 'OWASP Dependency Check scan of third-party dependencies'
-        steps:
-        - task: dependency-check-build-task@6
-          inputs:
-            projectName: 'angularApp'
-            scanPath: '$(Build.SourcesDirectory)'
-            failOnCVSS: 8 # Fail the build if vulnerabilities with CVSS score higher than 8 are discovered
-            format: 'HTML' # Format of scan result report
-            additionalArguments: '--scan $(Build.SourcesDirectory)'
+
       - job: 'WebGoat_Test'
         displayName: 'WebGoat Stats'
         steps:
@@ -84,3 +75,21 @@ stages:
               npm install --verbose
               #npm run lint
               #npm run build:war
+      
+      - job: 'OWASP_Scan'
+        displayName: 'OWASP Dependency Check scan of third-party dependencies'
+        steps:
+        - task: dependency-check-build-task@6
+          inputs:
+            projectName: 'angularApp'
+            scanPath: '$(Build.SourcesDirectory)'
+            failOnCVSS: 8 # Fail the build if vulnerabilities with CVSS score higher than 8 are discovered
+            format: 'JUNIT' # Format of scan result report
+            additionalArguments: '--scan $(Build.SourcesDirectory)'
+        - task: PublishTestResults@2
+          displayName: 'Publish OWASP Dependency Check security scan results'
+          inputs:
+            testResultsFormat: 'JUnit'
+            testResultsFiles: 'dependency-check/*junit.xml'
+            searchFolder: '$(Common.TestResultsDirectory)'
+            testRunTitle: 'Dependency Check'
