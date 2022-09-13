@@ -42,15 +42,12 @@ stages:
       - job: 'WebGoat_Test'
         displayName: 'WebGoat Stats'
         steps:
-          #- script: docker pull quay.io/appthreat/sast-scan
-          #  displayName: "Download sast-scan"
-          - script: |
-              #/app/bin/kics scan --ci -p ${PWD} -o ${PWD}
-              #cat results.json
-              #docker pull checkmarx/kics:latest​​​​
-              docker pull quay.io/appthreat/sast-scan
-              #ls -al ${PWD}
+          - script: docker pull quay.io/appthreat/sast-scan
+            displayName: "Download sast-scan"
+          - script: |  
               docker run -e "GITHUB_TOKEN=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" -v "$(Build.SourcesDirectory):/src:cached" -v "$(Build.ArtifactStagingDirectory):/reports:cached" quay.io/appthreat/sast-scan scan --src /src --out_dir /reports/CodeAnalysisLogs
+        continueOnError: "true"
+
       #- job: 'lint_tests'
       #  displayName: 'Lint Tests'
       #  steps:
