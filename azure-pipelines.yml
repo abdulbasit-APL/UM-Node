@@ -33,12 +33,8 @@ stages:
       - job: 'WebGoat_Test'
         displayName: 'WebGoat Stats'
         steps:
-          - script: docker pull quay.io/appthreat/sast-scan
-            displayName: "Download sast-scan"
-          - script: |  
-              docker run -e "WORKSPACE=https://github.com/AppThreat/WebGoat/blob/$(Build.SourceVersion)" -v "$(Build.SourcesDirectory):/src:cached" -v "$(Build.ArtifactStagingDirectory):/reports:cached" quay.io/appthreat/sast-scan scan --src /src --out_dir /reports/CodeAnalysisLogs
-        continueOnError: "true"
-
+        - template: ci/WebGoat.yml
+      
       - job: 'lint_tests'
         displayName: 'super-linter validation'
         steps:
