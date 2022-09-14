@@ -28,7 +28,7 @@ stages:
       - job: 'Snyk_Scan'
         displayName: 'Snyk Report'
         steps:
-        - task: ci/Snyk.yml
+        - template: ci/Snyk.yml
   
       - job: 'WebGoat_Test'
         displayName: 'WebGoat Stats'
