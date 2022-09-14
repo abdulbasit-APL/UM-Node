@@ -1,14 +1,22 @@
 steps:
-    - script: |
-        docker pull github/super-linter:latest
-        docker run -e RUN_LOCAL=true -e VALIDATE_YAML=true -v $(System.DefaultWorkingDirectory):/tmp/lint github/super-linter
-      displayName: 'Code Scan using GitHub Super-Linter'
 
-  # To integrate with the Scan Extension it is necessary to publish the CodeAnalysisLogs folder
-  # as an artifact with the same name
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish analysis logs"
-    inputs:
-      PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
-      ArtifactName: "CodeAnalysisLogs"
-      publishLocation: "Container"
+# Pull the sast-scan image from the container registry. Feel free to cache it locally within acr, ecr or gcr to
+# improve performance and security
+- script: docker pull quay.io/appthreat/sast-scan
+  displayName: "Download sast-scan"
+- script: |
+    docker run -e "GITHUB_TOKEN=$(GITHUB_TOKEN)" \
+      -v "$(Build.SourcesDirectory):/app:cached" \
+      -v "$(Build.ArtifactStagingDirectory):/reports:cached" \
+      quay.io/appthreat/sast-scan scan --src /app \
+      --out_dir /reports/CodeAnalysisLogs
+  displayName: "AppThreat SAST and Dep scan"
+  continueOnError: "true"
+# To integrate with the SARIF Azure DevOps Extension it is necessary to publish the CodeAnalysisLogs folder
+# as an artifact with the same name
+- task: PublishBuildArtifacts@1
+  displayName: "Publish analysis logs"
+  inputs:
+    PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
+    ArtifactName: "CodeAnalysisLogs"
+    publishLocation: "Container"
