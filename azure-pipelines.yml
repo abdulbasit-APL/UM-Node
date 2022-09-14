@@ -28,17 +28,8 @@ stages:
       - job: 'Snyk_Scan'
         displayName: 'Snyk Report'
         steps:
-          - task: SnykSecurityScan@1
-            inputs:
-              serviceConnectionEndpoint: 'snyk'
-              testType: 'app'
-              severityThreshold: 'medium'
-              monitorWhen: 'always'
-              failOnIssues: false
-              projectName: 'angularApp'
-      
-      
-
+        - task: ci/Snyk.yml
+  
       - job: 'WebGoat_Test'
         displayName: 'WebGoat Stats'
         steps:
