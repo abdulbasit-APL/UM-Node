@@ -1,11 +1,15 @@
 steps:
   # This integrates Scan with automatic build
-  - script: scan --build --out_dir $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
-    env:
-      WORKSPACE: https://github.com/prabhu/HelloShiftLeft/blob/$(Build.SourceVersion)
-      GITHUB_TOKEN: $(GITHUB_TOKEN)
-    displayName: "Perform scan"
-    continueOnError: "true"
+  - script: docker pull quay.io/appthreat/sast-scan
+    displayName: "Download sast-scan"
+  - script: |
+    docker run -e "WORKSPACE=https://github.com/AppThreat/WebGoat/blob/$(Build.SourceVersion)" \
+      -v "$(Build.SourcesDirectory):/app:cached" \
+      -v "$(Build.ArtifactStagingDirectory):/reports:cached" \
+      quay.io/appthreat/sast-scan scan --src /app \
+      --out_dir /reports/CodeAnalysisLogs
+  displayName: "Perform AppThreat Scan"
+  continueOnError: "true"
 
   # To integrate with the Scan Extension it is necessary to publish the CodeAnalysisLogs folder
   # as an artifact with the same name
