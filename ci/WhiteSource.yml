@@ -3,15 +3,4 @@ steps:
             inputs:
               cwd: '$(System.DefaultWorkingDirectory)'
               extensions: '.json .js .ts .css .html'
-              projectName: 'angularApp'             
-      - job: 'Snyk_Scan'
-        displayName: 'Snyk Report'
-        steps:
-          - task: SnykSecurityScan@1
-            inputs:
-              serviceConnectionEndpoint: 'snyk'
-              testType: 'app'
-              severityThreshold: 'medium'
-              monitorWhen: 'always'
-              failOnIssues: false
               projectName: 'angularApp'
