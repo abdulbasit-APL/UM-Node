@@ -7,6 +7,7 @@ steps:
           docker run \
             -e RUN_LOCAL=true \
             -e VALIDATE_ARM=true \
+            -e LOG_LEVEL=TRACE \
             -v $(System.DefaultWorkingDirectory):/tmp/lint \
             github/super-linter
         displayName: super-linter validation
