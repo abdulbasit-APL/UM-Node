@@ -18,10 +18,12 @@ stages:
   - stage: 'PreDeployment'
     displayName: 'Security Code Analysis'
     jobs:
-      - job: 'risk_report'
+      - job: risk_report
         displayName: 'Risk Report'
+        pool:
+          vmImage: "ubuntu-latest"
         steps:
-          - template: ci/WhiteSource.yml             
+        - template: ci/WhiteSource.yml             
       
       - job: 'Snyk_Scan'
         displayName: 'Snyk Report'
