@@ -13,9 +13,9 @@ steps:
 
   # To integrate with the Scan Extension it is necessary to publish the CodeAnalysisLogs folder
   # as an artifact with the same name
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish analysis logs"
-    inputs:
-      PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
-      ArtifactName: "CodeAnalysisLogs"
-      publishLocation: "Container"
+  #- task: PublishBuildArtifacts@1
+  #  displayName: "Publish analysis logs"
+  #  inputs:
+  #    PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
+  #    ArtifactName: "CodeAnalysisLogs"
+  #    publishLocation: "Container"
