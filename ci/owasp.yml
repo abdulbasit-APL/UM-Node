@@ -1,0 +1,22 @@
+steps:
+
+  - task: dependency-check-build-task@6
+    displayName: 'OWASP Dependency Check scan of third-party dependencies' # This task will perform security scan of third-party dependencies
+    inputs:
+      projectName: 'angularApp'
+      scanPath: '$(Build.SourcesDirectory)'
+      failOnCVSS: 8 # Fail the build if vulnerabilities with CVSS score higher than 8 are discovered
+      format: 'HTML, JUNIT' # Format of scan result report
+      suppressionPath: '$(Build.SourcesDirectory)/suppression-file.xml' # File where all the suppressed vulnerabilities are defined
+      enableExperimental: true # Enable experimental file type analyzers
+      additionalArguments: '--scan $(Build.SourcesDirectory)' # Additional folder to scan
+      dependencyCheckVersion: '7.1.2'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish OWASP Dependency Check security scan results'
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'dependency-check/*junit.xml'
+      searchFolder: '$(Common.TestResultsDirectory)'
+      testRunTitle: 'Dependency Check'
+      buildConfiguration: '$(BuildConfiguration)'
