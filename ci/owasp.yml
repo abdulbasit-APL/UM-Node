@@ -15,13 +15,13 @@ steps:
       continueOnError: true
 
   - task: PublishTestResults@2
-    displayName: 'Publish OWASP Dependency Check security scan results'
+    displayName: 'OWASP Dependency Check'
     inputs:
       testResultsFormat: 'HTML'
       testResultsFiles: 'dependency-check-report.html'
       #testResultsFiles: 'dependency-check-junit.xml'
       #searchFolder: '$(Common.TestResultsDirectory)'
-      searchFolder: '/home/vsts/work/1/TestResults/dependency-check/'
+      searchFolder: '$(System.DefaultWorkingDirectory)/TestResults/dependency-check/'
       #searchFolder: '/home/vsts/work/1/TestResults/dependency-check/dependency-check-report.html'
       testRunTitle: 'Dependency Check'
       #buildConfiguration: '$(BuildConfiguration)'
