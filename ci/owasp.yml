@@ -4,8 +4,11 @@ steps:
     displayName: 'OWASP Dependency Check scan of third-party dependencies' # This task will perform security scan of third-party dependencies
     inputs:
       projectName: 'angularApp'
-      scanPath: '$(Build.SourcesDirectory)'
+      #scanPath: '$(Build.SourcesDirectory)'
+      scanPath: $(System.DefaultWorkingDirectory)
       failOnCVSS: 100 # Fail the build if vulnerabilities with CVSS score higher than 8 are discovered
+      reportsDirectory: '$(System.DefaultWorkingDirectory)/Reports'
+      reportFilename: 'dependencyCheckReport.html'
       #format: 'HTML, JUNIT' # Format of scan result report
       format: 'ALL'
       #suppressionPath: '$(Build.SourcesDirectory)/suppression-file.xml' # File where all the suppressed vulnerabilities are defined
