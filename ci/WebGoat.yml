@@ -8,14 +8,15 @@ steps:
       -v "$(Build.ArtifactStagingDirectory):/reports:cached" \
       quay.io/appthreat/sast-scan scan --src /app \
       --out_dir /reports/CodeAnalysisLogs
-  displayName: "Perform AppThreat Scan"
-  continueOnError: "true"
+    
+displayName: "Perform AppThreat Scan"
+continueOnError: "true"
 
   # To integrate with the Scan Extension it is necessary to publish the CodeAnalysisLogs folder
   # as an artifact with the same name
-  #- task: PublishBuildArtifacts@1
-  #  displayName: "Publish analysis logs"
-  #  inputs:
-  #    PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
-  #    ArtifactName: "CodeAnalysisLogs"
-  #    publishLocation: "Container"
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish analysis logs"
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
+      ArtifactName: "CodeAnalysisLogs"
+      publishLocation: "Container"
