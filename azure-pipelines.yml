@@ -38,10 +38,8 @@ stages:
       - job: 'lint_tests'
         displayName: 'super-linter validation'
         steps:
-          - script: |
-              docker pull github/super-linter:latest
-              docker run -e RUN_LOCAL=true -e LOG_LEVEL=TRACE -v $(System.DefaultWorkingDirectory):/tmp/lint github/super-linter
-        continueOnError: "true"
+        - template: ci/linter.yml
+  
   - stage: 'Build_Publish_Artifact'
     displayName: 'Build The Artifact'
     jobs:
