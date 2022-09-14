@@ -1,0 +1,9 @@
+steps:
+          - task: SnykSecurityScan@1
+            inputs:
+              serviceConnectionEndpoint: 'snyk'
+              testType: 'app'
+              severityThreshold: 'medium'
+              monitorWhen: 'always'
+              failOnIssues: false
+              projectName: 'angularApp'
