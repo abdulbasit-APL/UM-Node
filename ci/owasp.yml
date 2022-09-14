@@ -5,7 +5,7 @@ steps:
     inputs:
       projectName: 'angularApp'
       scanPath: '$(Build.SourcesDirectory)'
-      failOnCVSS: 8 # Fail the build if vulnerabilities with CVSS score higher than 8 are discovered
+      failOnCVSS: 100 # Fail the build if vulnerabilities with CVSS score higher than 8 are discovered
       #format: 'HTML, JUNIT' # Format of scan result report
       format: 'ALL'
       #suppressionPath: '$(Build.SourcesDirectory)/suppression-file.xml' # File where all the suppressed vulnerabilities are defined
