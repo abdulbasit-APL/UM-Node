@@ -6,17 +6,22 @@ steps:
       projectName: 'angularApp'
       scanPath: '$(Build.SourcesDirectory)'
       failOnCVSS: 8 # Fail the build if vulnerabilities with CVSS score higher than 8 are discovered
-      format: 'HTML, JUNIT' # Format of scan result report
+      #format: 'HTML, JUNIT' # Format of scan result report
+      format: 'ALL'
       #suppressionPath: '$(Build.SourcesDirectory)/suppression-file.xml' # File where all the suppressed vulnerabilities are defined
       enableExperimental: true # Enable experimental file type analyzers
       additionalArguments: '--scan $(Build.SourcesDirectory)' # Additional folder to scan
       dependencyCheckVersion: '7.1.2'
+      continueOnError: true
 
   - task: PublishTestResults@2
     displayName: 'Publish OWASP Dependency Check security scan results'
     inputs:
-      testResultsFormat: 'JUnit'
-      testResultsFiles: 'dependency-check/*junit.xml'
-      searchFolder: '$(Common.TestResultsDirectory)'
+      testResultsFormat: 'HTML'
+      testResultsFiles: 'dependency-check-report.html'
+      #testResultsFiles: 'dependency-check-junit.xml'
+      #searchFolder: '$(Common.TestResultsDirectory)'
+      searchFolder: '/home/vsts/work/1/TestResults/dependency-check/'
+      #searchFolder: '/home/vsts/work/1/TestResults/dependency-check/dependency-check-report.html'
       testRunTitle: 'Dependency Check'
-      buildConfiguration: '$(BuildConfiguration)'
+      #buildConfiguration: '$(BuildConfiguration)'
