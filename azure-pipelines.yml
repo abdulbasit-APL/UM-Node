@@ -2,8 +2,8 @@
 trigger:
   branches:
     include:
-      - main
-      - master
+      #- main
+      #- master
       - release/*
 
 pool:
@@ -21,11 +21,8 @@ stages:
       - job: 'risk_report'
         displayName: 'Risk Report'
         steps:
-          - task: WhiteSource@21
-            inputs:
-              cwd: '$(System.DefaultWorkingDirectory)'
-              extensions: '.json .js .ts .css .html'
-              projectName: 'angularApp'             
+          - template: ci/WhiteSource.yml             
+      
       - job: 'Snyk_Scan'
         displayName: 'Snyk Report'
         steps:
