@@ -15,8 +15,8 @@ steps:
 # To integrate with the SARIF Azure DevOps Extension it is necessary to publish the CodeAnalysisLogs folder
 # as an artifact with the same name
 - task: PublishBuildArtifacts@1
-  displayName: "Publish analysis logs"
+  displayName: "Publish SAST analysis logs"
   inputs:
-    PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
-    ArtifactName: "CodeAnalysisLogs"
+    PathtoPublish: "$(Build.ArtifactStagingDirectory)/SAST-AnalysisLogs"
+    ArtifactName: "SAST-AnalysisLogs"
     publishLocation: "Container"
