@@ -25,8 +25,8 @@ steps:
       displayName: 'Archiving Files to: $(System.DefaultWorkingDirectory)/$(webappname).zip'
       inputs:
         targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
-     - script: |
-         pwd
-         ls -al
-       displayName: 'Listing All Files' 
+    - script: |
+        pwd
+        ls -al
+      displayName: 'Listing All Files' 
           
