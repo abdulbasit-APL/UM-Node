@@ -62,7 +62,20 @@ stages:
       - job: 'OWASP_Scan'
         displayName: 'OWASP Dependency Check scan of third-party dependencies'
         steps:
-        - template: ci/owasp.yml 
+        - template: ci/owasp.yml
+  
+  - stage: 'Build_Validation'
+    displayName: 'External Validation'
+    dependsOn: 'Build_Artifact'
+    condition: succeeded('Build_Artifact')
+    jobs:
+      - job: waitForValidation
+        displayName: 'Wait for external validation'
+        pool: 
+          vmImage: 'ubuntu-latest'
+        timeoutInMinutes: 4320 # job times out in 3 days  
+        steps:
+        - template: cd/validation.yml      
   
   - stage: 'Deploy_to_Dev'
     displayName: 'Dev Stage'
