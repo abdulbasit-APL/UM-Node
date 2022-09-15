@@ -67,11 +67,11 @@ stages:
   - stage: 'Build_Validation'
     displayName: 'External Validation'
     dependsOn: 'Build_Artifact'
+    environment: 'Dev'
     condition: succeeded('Build_Artifact')
     jobs:
       - job: waitForValidation
         displayName: 'Wait for external validation'
-        environment: 'Dev'
         pool: 'server'
         timeoutInMinutes: 4320 # job times out in 3 days  
         steps:
