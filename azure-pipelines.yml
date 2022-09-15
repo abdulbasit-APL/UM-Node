@@ -79,3 +79,51 @@ stages:
           deploy:
              steps:
              - template: cd/dev.yml
+             
+  - stage: 'Deploy_to_QA'
+    displayName: 'QA Stage'
+    dependsOn: 'Deploy_to_Dev'
+    condition: succeeded('Deploy_to_Dev')
+    jobs:
+    - deployment: 'Deploy_Artifact_To_QA'
+      displayName: 'Deploy_Artifact To QA'
+      environment: 'QA'
+      pool: 
+        vmImage: 'ubuntu-latest'
+      strategy:
+        runOnce:
+          deploy:
+             steps:
+             - template: cd/QA.yml
+             
+  - stage: 'Deploy_to_Staging'
+    displayName: 'Staging Stage'
+    dependsOn: 'Deploy_to_QA'
+    condition: succeeded('Deploy_to_QA')
+    jobs:
+    - deployment: 'Deploy_Artifact_To_Staging'
+      displayName: 'Deploy_Artifact To Staging'
+      environment: 'Staging'
+      pool: 
+        vmImage: 'ubuntu-latest'
+      strategy:
+        runOnce:
+          deploy:
+             steps:
+             - template: cd/stg.yml
+             
+  - stage: 'Deploy_to_Prod'
+    displayName: 'Prod Stage'
+    dependsOn: 'Deploy_to_Staging'
+    condition: succeeded('Deploy_to_Staging')
+    jobs:
+    - deployment: 'Deploy_Artifact_To_Prod'
+      displayName: 'Deploy_Artifact To Prod'
+      environment: 'Prod'
+      pool: 
+        vmImage: 'ubuntu-latest'
+      strategy:
+        runOnce:
+          deploy:
+             steps:
+             - template: cd/prod.yml           
