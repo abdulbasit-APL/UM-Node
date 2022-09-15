@@ -1,0 +1,9 @@
+steps:
+    - task: ManualValidation@0
+      timeoutInMinutes: 1440 # task times out in 1 day
+      inputs:
+        notifyUsers: |
+          abdul.basit@analytics.com.pk
+         
+        instructions: 'Please validate the build configuration and resume'
+        onTimeout: 'resume'
