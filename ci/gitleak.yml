@@ -3,5 +3,6 @@ steps:
             inputs:
               scanlocation: '$(Build.SourcesDirectory)'
               configtype: 'predefined'
+              failOnIssues: 'false'
               predefinedconfigfile: 'GitleaksUdmCombo.toml'
               reportformat: 'sarif'
