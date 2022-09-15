@@ -11,8 +11,9 @@ pool:
   container: shiftleft/sast-scan:latest
 
 
-#variables:
+variables:
 #  - group: angular-app-vars
+  webappname : 'angularApp'
 
 stages:
   - stage: 'PreDeployment'
