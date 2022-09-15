@@ -18,8 +18,8 @@ steps:
         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/$(webappname)'
         includeRootFolder: false
         replaceExistingArchive: true
-        #archiveType: zip
-        archiveFile: '$(System.DefaultWorkingDirectory)/$(webappname)'
+        archiveType: zip
+        archiveFile: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
     - task: PublishPipelineArtifact@0
       inputs:
         targetPath: '$(System.ArtifactsDirectory)'
