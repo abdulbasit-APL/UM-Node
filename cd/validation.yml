@@ -5,6 +5,6 @@ steps:
         notifyUsers: |
           abdulbasit@analytics.com.pk
          
-        instructions: 'Please validate the build configuration and resume'
+        instructions: 'Please validate the build configuration and resume to deploy on Dev Environment'
         environment: 'Dev'
         onTimeout: 'resume'
