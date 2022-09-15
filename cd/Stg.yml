@@ -1,0 +1,14 @@
+          steps:
+          - task: DownloadPipelineArtifact@1
+            displayName: 'Download Pipeline Artifact'
+            inputs:
+              buildType: 'current'
+
+          - task: AzureWebApp@1
+            inputs:
+              #azureSubscription: '$(subscription)'
+              appType: 'webApp'
+              appName: '$(webappname)'
+              package: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
+              #customWebConfig: '-Handler iisnode -NodeStartFile index.js -appType node'
+              deploymentMethod: 'zipDeploy'
