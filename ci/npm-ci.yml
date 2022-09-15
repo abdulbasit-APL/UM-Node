@@ -8,10 +8,18 @@ steps:
         #npm run build
         #npm run test
       displayName: 'npm install, build, and test'
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(System.DefaultWorkingDirectory)/$(webappname)'
+      inputs:
+        SourceFolder: '$(system.defaultworkingdirectory)'
+        TargetFolder: '$(System.DefaultWorkingDirectory)/$(webappname)'
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/$(webappname)'
         includeRootFolder: false
+        replaceExistingArchive: true
+        #archiveType: zip
+        archiveFile: '$(System.DefaultWorkingDirectory)/$(webappname)'
     - task: PublishPipelineArtifact@0
       inputs:
         targetPath: '$(System.ArtifactsDirectory)'
