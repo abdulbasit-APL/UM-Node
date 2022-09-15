@@ -62,3 +62,18 @@ stages:
         steps:
         - template: ci/owasp.yml 
   
+  - stage: 'Deploy_to_Dev'
+  displayName: 'Dev stage'
+  dependsOn: 'Build_Publish_Artifact'
+  condition: succeeded('Build_Publish_Artifact')
+  jobs:
+  - deployment: 'Deploy_Artifact_To_Dev'
+    displayName: 'Deploy_Artifact To Dev'
+    environment: 'development'
+    pool: 
+      vmImage: 'ubuntu-latest'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: cd/dev.yml
