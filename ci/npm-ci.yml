@@ -22,4 +22,4 @@ steps:
         archiveFile: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
     - task: PublishPipelineArtifact@0
       inputs:
-        targetPath: '$(System.ArtifactsDirectory)'
+        targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
