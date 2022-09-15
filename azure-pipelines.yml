@@ -110,7 +110,7 @@ stages:
         runOnce:
           deploy:
              steps:
-             - template: cd/stg.yml
+             - template: cd/Stg.yml
              
   - stage: 'Deploy_to_Prod'
     displayName: 'Prod Stage'
@@ -126,4 +126,4 @@ stages:
         runOnce:
           deploy:
              steps:
-             - template: cd/prod.yml           
+             - template: cd/Prod.yml           
