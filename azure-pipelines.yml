@@ -31,6 +31,11 @@ stages:
         steps:
         - template: ci/Snyk.yml
   
+      - job: 'Gitleak_Scan'
+        displayName: 'Gitleak Report'
+        steps:
+        - template: ci/gitleak.yml
+        
       - job: 'WebGoat_Test'
         displayName: 'WebGoat Stats'
         steps:
