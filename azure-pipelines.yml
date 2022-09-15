@@ -67,7 +67,6 @@ stages:
   - stage: 'Build_Validation'
     displayName: 'External Validation'
     dependsOn: 'Build_Artifact'
-    environment: 'Dev'
     condition: succeeded('Build_Artifact')
     jobs:
       - job: waitForValidation
