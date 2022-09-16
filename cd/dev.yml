@@ -3,6 +3,7 @@
             displayName: 'Download Pipeline Artifact'
             inputs:
               artifactName: '$(webappname).zip'
+              downloadPath: '$(System.DefaultWorkingDirectory)'
               targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
               #buildType: 'current'
           - script: |
