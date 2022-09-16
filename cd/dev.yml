@@ -6,7 +6,8 @@
               runVersion: 'latest'
               downloadPath: '$(System.DefaultWorkingDirectory)'
               #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
-              targetPath: '$(Pipeline.Workspace)'
+              #targetPath: '$(Pipeline.Workspace)'
+              targetPath: '$(System.ArtifactsDirectory)'
               #buildType: 'current'
           - script: |
               pwd
