@@ -103,7 +103,7 @@ stages:
                - task: DownloadPipelineArtifact@2
                  inputs:
                    artifactName: '$(webappname).zip'
-                   targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
+                   #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
              
   - stage: 'Deploy_to_QA'
     displayName: 'QA Environment'
