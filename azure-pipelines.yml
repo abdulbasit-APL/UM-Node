@@ -99,13 +99,13 @@ stages:
         runOnce:
           deploy:
              steps:
-             #- template: cd/dev.yml
-               - task: DownloadPipelineArtifact@2
-                 inputs:
-                   runVersion: 'latest'
-                   downloadPath: '$(System.DefaultWorkingDirectory)'
-                   #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
-                   targetPath: '$(Pipeline.Workspace)'
+             - template: cd/dev.yml
+               #- task: DownloadPipelineArtifact@2
+               #  inputs:
+               #    runVersion: 'latest'
+               #    downloadPath: '$(System.DefaultWorkingDirectory)'
+               #    #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
+               #    targetPath: '$(Pipeline.Workspace)'
              
   - stage: 'Deploy_to_QA'
     displayName: 'QA Environment'
