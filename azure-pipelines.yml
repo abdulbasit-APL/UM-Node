@@ -100,9 +100,10 @@ stages:
           deploy:
              steps:
              #- template: cd/dev.yml
-               - task: DownloadPipelineArtifact@2
+               - task: DownloadPipelineArtifact@1
                  inputs:
                    artifactName: '$(webappname).zip'
+                   downloadPath: '$(System.DefaultWorkingDirectory)'
                    #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
              
   - stage: 'Deploy_to_QA'
