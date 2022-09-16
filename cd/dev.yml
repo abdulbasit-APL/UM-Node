@@ -1,11 +1,13 @@
           steps:
           - task: DownloadPipelineArtifact@2
             displayName: 'Download Pipeline Artifact'
+            #download: 'current
             inputs:
               artifactName: '$(webappname).zip'
-              downloadPath: '$(System.DefaultWorkingDirectory)'
-              targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
-              #buildType: 'current'
+              #downloadPath: '$(System.DefaultWorkingDirectory)'
+              #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
+              path: '$(System.DefaultWorkingDirectory)'
+              buildType: 'current'
           - script: |
               pwd
               ls -al
