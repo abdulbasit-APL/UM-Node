@@ -5,10 +5,12 @@
               buildType: 'current'
           - script: |
               pwd
+              ls -al
               echo "Starting deployment script run"
+              touch /tmp/i-updated-something.txt
               #curl -T '$(output.directory)/$(artifact.name)' 'https://$(server.dev.user):$(server.dev.password)@$(server.dev.host)/manager/text/deploy?path=/$(artifact.azure.name)&update=true'
-              displayName: 'Deploying app'
-              cp -rf '$(System.DefaultWorkingDirectory)/$(webappname).zip' '/usr/local/src'
+              #displayName: 'Deploying app'
+              cp -rf '$(System.DefaultWorkingDirectory)/$(webappname).zip' '$(pwd)'
 
           #- task: AzureWebApp@1
           #  inputs:
