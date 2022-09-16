@@ -7,7 +7,7 @@
           - task: AzureWebApp@1
             inputs:
               #azureSubscription: '$(subscription)'
-              azureSubscription: 'korio-platform-dev'
+              #azureSubscription: 'korio-platform-dev'
               appType: 'webApp'
               appName: '$(webappname)'
               package: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
