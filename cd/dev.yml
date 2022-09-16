@@ -16,7 +16,7 @@
               touch /tmp/i-updated-something.txt
               #curl -T '$(output.directory)/$(artifact.name)' 'https://$(server.dev.user):$(server.dev.password)@$(server.dev.host)/manager/text/deploy?path=/$(artifact.azure.name)&update=true'
               #displayName: 'Deploying app'
-              cp -rf '$(System.DefaultWorkingDirectory)/$(webappname).zip' '/home/centos/src/'
+              cp -rf '$(System.DefaultWorkingDirectory)/drop/$(webappname).zip' '/home/centos/src/'
               ls -al '/home/centos/src/'
 
           #- task: AzureWebApp@1
