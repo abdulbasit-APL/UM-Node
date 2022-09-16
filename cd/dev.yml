@@ -3,11 +3,11 @@
             displayName: 'Download Pipeline Artifact'
             #download: 'current
             inputs:
-              artifactName: '$(webappname).zip'
-              #downloadPath: '$(System.DefaultWorkingDirectory)'
+              runVersion: 'latest'
+              downloadPath: '$(System.DefaultWorkingDirectory)'
               #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
-              path: '$(System.DefaultWorkingDirectory)'
-              buildType: 'current'
+              targetPath: '$(Pipeline.Workspace)'
+              #buildType: 'current'
           - script: |
               pwd
               ls -al
