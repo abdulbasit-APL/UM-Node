@@ -88,8 +88,11 @@ stages:
     jobs:
     - deployment: 'Deploy_Artifact_To_Dev'
       displayName: 'Deploy_Artifact To Dev'
-      environment: 'Dev'
-      resourceType: VirtualMachine
+      #environment: 'Dev'
+      environment:
+        name: 'Dev'
+        resourceType: 'VirtualMachine'
+      #resourceType: VirtualMachine
       pool: 
         vmImage: 'ubuntu-latest'
       strategy:
