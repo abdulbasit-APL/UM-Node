@@ -23,6 +23,8 @@ steps:
         archiveFile: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
     - task: PublishPipelineArtifact@0
       displayName: 'Archiving Files to: $(System.DefaultWorkingDirectory)/$(webappname).zip'
+    - upload: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
+      artifact: drop
       inputs:
         targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
     - script: |
