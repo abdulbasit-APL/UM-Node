@@ -4,11 +4,9 @@
             #download: 'current
             inputs:
               runVersion: 'latest'
-              buildType: 'current'
-              artifactName: 'drop'
               downloadPath: '$(System.DefaultWorkingDirectory)'
               #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
-              #targetPath: '$(Pipeline.Workspace)'
+              targetPath: '$(Pipeline.Workspace)'
               #buildType: 'current'
           - script: |
               pwd
