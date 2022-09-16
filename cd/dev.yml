@@ -1,8 +1,9 @@
           steps:
-          - task: DownloadPipelineArtifact@1
+          - task: DownloadPipelineArtifact@2
             displayName: 'Download Pipeline Artifact'
             inputs:
-              buildType: 'current'
+              artifactName: '$(webappname).zip'
+              #buildType: 'current'
           - script: |
               pwd
               ls -al
