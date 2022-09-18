@@ -3,12 +3,17 @@
             displayName: 'Download Pipeline Artifact'
             #download: 'current
             inputs:
+              targetPath: $(Build.ArtifactStagingDirectory)/**
+              ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+                  artifactName: 'prod'
+              ${{ else }}:
+                  artifactName: 'dev'
               runVersion: 'latest'
               downloadPath: '$(System.DefaultWorkingDirectory)'
               #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
               #targetPath: '$(Pipeline.Workspace)'
               #targetPath: '$(System.ArtifactsDirectory)/** ${{ if eq(variables['Build.SourceBranchName'], 'main') }}: artifactName: 'prod' ${{ else }}: artifactName: 'dev''
-              targetPath: '$(System.ArtifactsDirectory)'
+              #targetPath: '$(System.ArtifactsDirectory)'
               #buildType: 'current'
           - script: |
               pwd
