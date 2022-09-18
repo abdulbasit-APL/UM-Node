@@ -15,9 +15,10 @@
               echo "Starting deployment on Dev Environment"
               #curl -T '$(output.directory)/$(artifact.name)' 'https://$(server.dev.user):$(server.dev.password)@$(server.dev.host)/manager/text/deploy?path=/$(artifact.azure.name)&update=true'
               #displayName: 'Deploying app'
-              echo "Copying Files to Application Directory"
-              sudo cp -rf '$(System.DefaultWorkingDirectory)/drop/$(webappname).zip' '/usr/local/src/'
-              ls -al '/usr/local/src/'
+              echo "####################Copying Files to Application Directory########################"
+              sudo mkdir "/usr/local/src/app-$(date +"%d-%m-%Y")"
+              sudo cp -rf '$(System.DefaultWorkingDirectory)/drop/$(webappname).zip' '/usr/local/src/app-$(date +"%d-%m-%Y")'
+              ls -al '/usr/local/src/app-$(date +"%d-%m-%Y")'
 
           #- task: AzureWebApp@1
           #  inputs:
