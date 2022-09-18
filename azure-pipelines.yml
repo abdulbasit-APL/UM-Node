@@ -61,7 +61,7 @@ stages:
   
   - stage: 'Post_Build_Scan'
     displayName: 'Post Build Scan'
-    dependsOn: 'Post_Build_Scan'
+    dependsOn: 'Build_Artifact'
     condition: succeeded('Build_Artifact')
     jobs:
       - job: 'OWASP_Scan'
@@ -71,7 +71,7 @@ stages:
   
   - stage: 'Build_Validation'
     displayName: 'External Validation'
-    dependsOn: 'Build_Artifact'
+    dependsOn: 'Post_Build_Scan'
     condition: succeeded('Build_Artifact')
     jobs:
       - job: waitForValidation
