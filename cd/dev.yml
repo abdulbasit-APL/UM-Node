@@ -7,11 +7,7 @@
               downloadPath: '$(System.DefaultWorkingDirectory)'
               #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
               #targetPath: '$(Pipeline.Workspace)'
-              targetPath: '$(System.ArtifactsDirectory)/**
-              ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
-                  artifactName: 'prod'
-                  ${{ else }}:
-              artifactName: 'dev''
+              targetPath: '$(System.ArtifactsDirectory)/** ${{ if eq(variables['Build.SourceBranchName'], 'main') }}: artifactName: 'prod' ${{ else }}: artifactName: 'dev''
               #targetPath: '$(System.ArtifactsDirectory)'
               #buildType: 'current'
           - script: |
