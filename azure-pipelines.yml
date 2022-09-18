@@ -61,7 +61,7 @@ stages:
   
   - stage: 'Post_Build_Scan'
     displayName: 'Post Build Scan'
-    dependsOn: 'Build_Artifact'
+    dependsOn: 'Post_Build_Scan'
     condition: succeeded('Build_Artifact')
     jobs:
       - job: 'OWASP_Scan'
