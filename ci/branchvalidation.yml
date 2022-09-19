@@ -1,16 +1,10 @@
 steps:
       - script: |
-          
-             ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
-              Write-Host "Source branch '$(Build.SourceBranchName)' is allowed"
-             ${{ else }}:
-                  Throw "Source branch '$(Build.SourceBranchName)' is not allowed. Only the '$' branch is allowed."
-          #if eq(variables['Build.SourceBranchName'], 'main') {
-          #if ('$(System.PullRequest.SourceBranch)' -ieq '$' -or '$(System.PullRequest.SourceBranch)' -ieq 'refs/heads/$') {
-          #  Write-Host "Source branch '$(System.PullRequest.SourceBranch)' is allowed"
-          #} else {
-          #  Throw "Source branch '$(variables['Build.SourceBranchName']' is not allowed. Only the '$' branch is allowed."
-          #  exit 1
-          #}
+          if ('$(Build.SourceBranchName)' -ieq 'main' -or '$(Build.SourceBranchName)' -ieq 'refs/heads/main') {
+            Write-Host "Source branch '$(Build.SourceBranchName)' is allowed"
+          } else {
+            Throw "Source branch '$(variables['Build.SourceBranchName']' is not allowed. Only the 'main' branch is allowed."
+            exit 1
+          }
             #displayName: "Check Build Source Branch"
         #errorActionPreference: Stop
