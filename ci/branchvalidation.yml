@@ -1,11 +1,21 @@
 steps:
       - script: |
-          #if ('$(Build.SourceBranchName)' -ieq 'main' -or '$(Build.SourceBranchName)' -ieq 'refs/heads/main') {
-          if ('$(Build.SourceBranchName)' -ieq 'main' {
+          if [[ "$(Build.SourceBranch)" == *"main"* ]]; then
             Write-Host "Source branch '$(Build.SourceBranchName)' is allowed"
-          } else {
-            Throw "Source branch '$(variables['Build.SourceBranchName']' is not allowed. Only the 'main' branch is allowed."
-            exit 1
-          }
+            #git checkout $(forceCICDIntegrationTestsBranch) --quiet
+          else
+            echo "Raw branch = $(Build.SourceBranch)"
+            branch=$(echo $(Build.SourceBranch) | sed 's/refs\/heads\///g')
+            echo "Cleaned branch = $branch"
+            echo "Checking out = origin/$branch"
+            git checkout origin/$branch --quiet
+          fi
+          #if ('$(Build.SourceBranchName)' -ieq 'main' -or '$(Build.SourceBranchName)' -ieq 'refs/heads/main') {
+          #if ('$(Build.SourceBranchName)' -ieq 'main' {
+          #  Write-Host "Source branch '$(Build.SourceBranchName)' is allowed"
+          #} else {
+          #  Throw "Source branch '$(variables['Build.SourceBranchName']' is not allowed. Only the 'main' branch is allowed."
+          #  exit 1
+          #}
             #displayName: "Check Build Source Branch"
         #errorActionPreference: Stop
