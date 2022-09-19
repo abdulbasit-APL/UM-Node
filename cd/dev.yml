@@ -5,11 +5,11 @@
             inputs:
               targetPath: $(Build.ArtifactStagingDirectory)/**
               ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
-                  artifactName: 'prod'
-                  echo "Source branch '(variables['Build.SourceBranchName']' is allowed to deploy on Dev Env"
+                  artifactName: '$(webappname).zip'
+                  #echo "Source branch '(variables['Build.SourceBranchName']' is allowed to deploy on Dev Env"
               ${{ else }}:
                   artifactName: 'dev'
-                  echo "Source branch '$(Build.SourceBranchName)' is not allowed to deploy code on Dev Env"
+                  #echo "Source branch '$(Build.SourceBranchName)' is not allowed to deploy code on Dev Env"
               runVersion: 'latest'
               downloadPath: '$(System.DefaultWorkingDirectory)'
               #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
