@@ -1,5 +1,5 @@
 steps:
-      - scripts: |
+      - script: |
           if ('$(System.PullRequest.SourceBranch)' -ieq '$' -or '$(System.PullRequest.SourceBranch)' -ieq 'refs/heads/$') {
             Write-Host "Source branch '$(System.PullRequest.SourceBranch)' is allowed"
           } else {
