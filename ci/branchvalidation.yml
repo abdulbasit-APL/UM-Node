@@ -12,5 +12,5 @@ steps:
           #  Throw "Source branch '$(variables['Build.SourceBranchName']' is not allowed. Only the '$' branch is allowed."
           #  exit 1
           #}
-             displayName: "Check Build Source Branch"
+            displayName: "Check Build Source Branch"
         #errorActionPreference: Stop
