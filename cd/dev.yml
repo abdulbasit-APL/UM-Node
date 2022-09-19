@@ -24,6 +24,7 @@
               sudo mkdir /usr/local/src/app-$(date +"%d-%m-%Y")
               sudo cp -rf '$(System.DefaultWorkingDirectory)/drop/$(webappname).zip' /usr/local/src/app-$(date +"%d-%m-%Y")
               ls -al /usr/local/src/app-$(date +"%d-%m-%Y")
+            displayName: "Deploying App to target Machine"  
 
           #- task: AzureWebApp@1
           #  inputs:
