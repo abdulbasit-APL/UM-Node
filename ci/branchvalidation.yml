@@ -1,6 +1,7 @@
 steps:
       - script: |
-          if ('$(Build.SourceBranchName)' -ieq 'main' -or '$(Build.SourceBranchName)' -ieq 'refs/heads/main') {
+          #if ('$(Build.SourceBranchName)' -ieq 'main' -or '$(Build.SourceBranchName)' -ieq 'refs/heads/main') {
+          if ('$(Build.SourceBranchName)' -ieq 'main' {
             Write-Host "Source branch '$(Build.SourceBranchName)' is allowed"
           } else {
             Throw "Source branch '$(variables['Build.SourceBranchName']' is not allowed. Only the 'main' branch is allowed."
