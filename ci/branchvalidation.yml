@@ -1,7 +1,7 @@
 steps:
       - script: |
           if [[ "$(Build.SourceBranch)" == *"main"* ]]; then
-            Write-Host "Source branch '$(Build.SourceBranchName)' is allowed"
+            echo "Source branch '$(Build.SourceBranchName)' is allowed"
             #git checkout $(forceCICDIntegrationTestsBranch) --quiet
           else
             echo "Raw branch = $(Build.SourceBranch)"
