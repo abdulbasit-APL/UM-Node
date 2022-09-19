@@ -62,6 +62,8 @@ stages:
         displayName: Source Branch Validation
         steps:
         - template: ci/branchvalidation.yml
+          parameters:
+            allowedSourceBranchName: "main"
   
   - stage: 'Build_Artifact'
     displayName: 'Building The Artifact'
