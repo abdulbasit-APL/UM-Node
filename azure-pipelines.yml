@@ -56,14 +56,12 @@ stages:
       #  - template: ci/linter.yml
   
   - stage: branch_policy_build_validation
-  displayName: "Branch Policy Build Validation"
-  jobs:
-  - job: source_branch_validation
-    displayName: Source Branch Validation
-    pool:
-      vmImage: "$"
-    steps:
-    - template: ci/branchvalidation.yml
+    displayName: "Branch Policy Build Validation"
+    jobs:
+      - job: source_branch_validation
+        displayName: Source Branch Validation
+        steps:
+        - template: ci/branchvalidation.yml
   
   - stage: 'Build_Artifact'
     displayName: 'Building The Artifact'
