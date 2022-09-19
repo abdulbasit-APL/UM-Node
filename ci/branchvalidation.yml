@@ -1,9 +1,9 @@
 steps:
       - script: |
           
-          ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+             ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
               Write-Host "Source branch '$(Build.SourceBranchName)' is allowed"
-              ${{ else }}:
+             ${{ else }}:
                   Throw "Source branch '$(Build.SourceBranchName)' is not allowed. Only the '$' branch is allowed."
           #if eq(variables['Build.SourceBranchName'], 'main') {
           #if ('$(System.PullRequest.SourceBranch)' -ieq '$' -or '$(System.PullRequest.SourceBranch)' -ieq 'refs/heads/$') {
@@ -12,5 +12,5 @@ steps:
           #  Throw "Source branch '$(variables['Build.SourceBranchName']' is not allowed. Only the '$' branch is allowed."
           #  exit 1
           #}
-        displayName: "Check Build Source Branch"
+             displayName: "Check Build Source Branch"
         #errorActionPreference: Stop
