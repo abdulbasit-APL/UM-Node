@@ -25,6 +25,17 @@ variables:
   webappname : 'angularApp'
 
 stages:
+  
+  - stage: branch_policy_build_validation
+    displayName: "Branch Policy Build Validation"
+    jobs:
+      - job: source_branch_validation
+        displayName: Source Branch Validation
+        steps:
+        - template: ci/branchvalidation.yml
+          #parameters:
+            #allowedSourceBranchName: "main"
+  
   - stage: 'PreDeployment'
     displayName: 'Security Code Analysis'
     jobs:
@@ -55,19 +66,20 @@ stages:
       #  steps:
       #  - template: ci/linter.yml
   
-  - stage: branch_policy_build_validation
-    displayName: "Branch Policy Build Validation"
-    jobs:
-      - job: source_branch_validation
-        displayName: Source Branch Validation
-        steps:
-        - template: ci/branchvalidation.yml
-          parameters:
-            allowedSourceBranchName: "main"
+  #- stage: branch_policy_build_validation
+  #  displayName: "Branch Policy Build Validation"
+  #  jobs:
+  #    - job: source_branch_validation
+  #      displayName: Source Branch Validation
+  #      steps:
+  #      - template: ci/branchvalidation.yml
+  #        parameters:
+  #          allowedSourceBranchName: "main"
   
   - stage: 'Build_Artifact'
     displayName: 'Building The Artifact'
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    dependsOn: 'PreDeployment'
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     jobs:
       - job: 'Building_Artifact'
         displayName: 'Building The Artifact'
