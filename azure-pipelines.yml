@@ -10,6 +10,15 @@ pool:
   vmImage: "ubuntu-latest"
   container: shiftleft/sast-scan:latest
 
+parameters:
+- name: agentPoolName
+  displayName: "Agent Pool Name"
+  type: string
+  default: "ubuntu-latest"
+- name: allowedSourceBranchName
+  displayName: Allowed Source branch name
+  type: string
+  default: "refs/heads/main"
 
 variables:
 #  - group: angular-app-vars
@@ -45,6 +54,16 @@ stages:
       #  displayName: 'super-linter validation'
       #  steps:
       #  - template: ci/linter.yml
+  
+  - stage: branch_policy_build_validation
+  displayName: "Branch Policy Build Validation"
+  jobs:
+  - job: source_branch_validation
+    displayName: Source Branch Validation
+    pool:
+      vmImage: "$"
+    steps:
+    - template: ci/branchvalidation.yml
   
   - stage: 'Build_Artifact'
     displayName: 'Building The Artifact'
