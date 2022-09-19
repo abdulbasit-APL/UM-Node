@@ -7,4 +7,4 @@ steps:
             exit 1
           }
         displayName: "Check Build Source Branch"
-        errorActionPreference: Stop
+        #errorActionPreference: Stop
