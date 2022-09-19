@@ -1,6 +1,6 @@
 steps:
       - script: |
-          if [[ "$(Build.SourceBranch)" == *"dev"* ]]; then
+          if [[ "$(Build.SourceBranch)" == *"main"* ]]; then
             echo "Source branch '$(Build.SourceBranchName)' is allowed"
             #git checkout $(forceCICDIntegrationTestsBranch) --quiet
           else
@@ -8,6 +8,7 @@ steps:
             branch=$(echo $(Build.SourceBranch) | sed 's/refs\/heads\///g')
             echo "Cleaned branch = $branch"
             echo "Checking out = origin/$branch"
+            Throw "Source branch '"$(Build.SourceBranch)"' is not allowed. Only the 'main' branch is allowed."
             git checkout origin/$branch --quiet
           fi
           #if ('$(Build.SourceBranchName)' -ieq 'main' -or '$(Build.SourceBranchName)' -ieq 'refs/heads/main') {
@@ -17,5 +18,5 @@ steps:
           #  Throw "Source branch '$(variables['Build.SourceBranchName']' is not allowed. Only the 'main' branch is allowed."
           #  exit 1
           #}
-            #displayName: "Check Build Source Branch"
+          displayName: "Check Build Source Branch"
         #errorActionPreference: Stop
