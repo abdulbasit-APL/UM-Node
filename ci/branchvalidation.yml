@@ -1,6 +1,6 @@
 steps:
       - script: |
-          if [[ "$(Build.SourceBranch)" == *"dev"* ]]; then
+          if [[ "$(Build.SourceBranch)" == *"main"* ]]; then
             echo "Source branch '$(Build.SourceBranchName)' is allowed"
             #git checkout $(forceCICDIntegrationTestsBranch) --quiet
           else
