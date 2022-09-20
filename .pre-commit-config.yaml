@@ -14,4 +14,3 @@ repos:
       args: ['--autofix']
     - id: check-merge-conflict
     - id: check-case-conflict
-    - id: check-docstring-first
