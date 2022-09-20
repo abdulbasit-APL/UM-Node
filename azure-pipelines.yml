@@ -36,6 +36,14 @@ stages:
           #parameters:
             #allowedSourceBranchName: "main"
   
+  - stage: 'pre_commit'
+    displayname: 'pre-commit hook Validation'
+    jobs:
+      - job: pre_commit
+        displayname: 'Pre-Commit Hook Validation'
+        steps:
+        - template: ci/pre-commit.yml
+  
   - stage: 'PreDeployment'
     displayName: 'Security Code Analysis'
     jobs:
