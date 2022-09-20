@@ -41,6 +41,8 @@ stages:
     jobs:
       - job: pre_commit
         displayName: 'Pre-Commit Hook Validation'
+        variables:
+          PRE_COMMIT_HOME: $(Pipeline.Workspace)/pre-commit-cache
         steps:
         - template: ci/pre-commit.yml
   
