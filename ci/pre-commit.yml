@@ -4,3 +4,4 @@ steps:
       pre-commit --version
       pre-commit run --all-files
     displayName: Execute pre-commit
+    failOnIssues: false
