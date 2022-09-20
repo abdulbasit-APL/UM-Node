@@ -1,6 +1,6 @@
 steps:
-  - script: echo "##vso[task.setvariable variable=PY]$(python -VV)"
-  - task: CacheBeta@0
-    inputs:
-      key: pre-commit | .pre-commit-config.yaml | "$(PY)"
-      path: $(PRE_COMMIT_HOME)
+  - script: |
+      pip install pre-commit
+      pre-commit --version
+      pre-commit run --all-files
+    displayName: Execute pre-commit
