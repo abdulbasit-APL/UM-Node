@@ -17,7 +17,7 @@
               pwd
               ls -al
               echo "####################Copying Files to Application Server########################"
-              sudo mkdir -p /CICD/korio/BE/pre-deployments/app-$$(TZ=GMT+24 date +%Y%m%d-%H%M)
+              sudo mkdir -p /CICD/korio/BE/pre-deployments/app-$(TZ=GMT+24 date +%Y%m%d-%H%M)
               sudo cd /CICD/korio/BE/pre-deployments
               sudo rm -rf UM-Node-main
               sudo mkdir UM-Node-main
