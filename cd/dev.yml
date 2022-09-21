@@ -16,14 +16,21 @@
           - script: |
               pwd
               ls -al
-              echo "Starting deployment on Dev Environment"
+              echo "####################Copying Files to Application Server########################"
+              sudo mkdir -p /CICD/korio/BE/pre-deployments/app-$$(TZ=GMT+24 date +%Y%m%d-%H%M)
+              sudo cd /CICD/korio/BE/pre-deployments
+              sudo rm -rf UM-Node-main
+              sudo mkdir UM-Node-main
+              sudo cp -rf '$(System.DefaultWorkingDirectory)/drop/$(webappname).zip' /CICD/korio/BE/pre-deployments/app-$(TZ=GMT+24 date +%Y%m%d-%H%M)
+              sudo cp -rf '/CICD/korio/BE/pre-deployments/app-$(TZ=GMT+24 date +%Y%m%d-%H%M)/$(webappname).zip' /CICD/korio/BE/pre-deployments/UM-Node-main
+              sudo ls -al /CICD/korio/BE/pre-deployments/UM-Node-main
+              echo "####################Deploying Files to Application Directory########################"
+              sudo /scripts/deployment-script
+              echo echo "####################Verify the deployment on Dev Environment########################"
+              #echo "Starting deployment on Dev Environment"
               #curl -T '$(output.directory)/$(artifact.name)' 'https://$(server.dev.user):$(server.dev.password)@$(server.dev.host)/manager/text/deploy?path=/$(artifact.azure.name)&update=true'
               #displayName: 'Deploying app'
-              echo "####################Copying Files to Application Directory########################"
-              #sudo mkdir "/usr/local/src/app-$(date +"%d-%m-%Y")"
-              sudo mkdir /usr/local/src/app-$(date +"%d-%m-%Y")
-              sudo cp -rf '$(System.DefaultWorkingDirectory)/drop/$(webappname).zip' /usr/local/src/app-$(date +"%d-%m-%Y")
-              ls -al /usr/local/src/app-$(date +"%d-%m-%Y")
+              
             displayName: "Deploying App to target Machine"  
 
           #- task: AzureWebApp@1
