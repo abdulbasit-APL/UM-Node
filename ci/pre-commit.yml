@@ -2,6 +2,7 @@ steps:
   - script: |
       pip install pre-commit
       pre-commit --version
-      pre-commit run --all-files
+      #pre-commit run --all-files
+      pre-commit run --all-files --show-diff-on-failure
     displayName: Execute pre-commit
     continueOnError: true
