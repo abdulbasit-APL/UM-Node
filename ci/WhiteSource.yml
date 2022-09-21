@@ -4,3 +4,4 @@ steps:
               cwd: '$(System.DefaultWorkingDirectory)'
               extensions: '.json .js .ts .css .html'
               projectName: 'angularApp'
+              continueOnError: true
