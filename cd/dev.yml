@@ -17,12 +17,12 @@
               pwd
               ls -al
               echo "####################Copying Files to Application Server########################"
-              sudo mkdir -p /CICD/korio/BE/pre-deployments/app-$(TZ=GMT+24 date +%Y%m%d-%H%M)
+              sudo mkdir -p /CICD/korio/BE/pre-deployments/app-$(date +"%d-%m-%Y")
               sudo cd /CICD/korio/BE/pre-deployments
               sudo rm -rf UM-Node-main
               sudo mkdir UM-Node-main
-              sudo cp -rf '$(System.DefaultWorkingDirectory)/drop/$(webappname).zip' /CICD/korio/BE/pre-deployments/app-$(TZ=GMT+24 date +%Y%m%d-%H%M)
-              sudo cp -rf '/CICD/korio/BE/pre-deployments/app-$(TZ=GMT+24 date +%Y%m%d-%H%M)/$(webappname).zip' /CICD/korio/BE/pre-deployments/UM-Node-main
+              sudo cp -rf '$(System.DefaultWorkingDirectory)/drop/$(webappname).zip' /CICD/korio/BE/pre-deployments/app-$(date +"%d-%m-%Y")
+              sudo cp -rf '$(System.DefaultWorkingDirectory)/drop/$(webappname).zip' /CICD/korio/BE/pre-deployments/UM-Node-main
               sudo ls -al /CICD/korio/BE/pre-deployments/UM-Node-main
               echo "####################Deploying Files to Application Directory########################"
               sudo /scripts/deployment-script
