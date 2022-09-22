@@ -60,7 +60,9 @@ steps:
     displayName: 'owasp nunit template'
     condition: always()
   
-  - scripts: ' handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
+  - script: |
+  $- script: 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
+      echo 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
       displayName: 'generate nunit type file'
       continueOnError: true
       condition: always()
