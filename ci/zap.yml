@@ -5,13 +5,13 @@ steps:
     inputs:
       projectName: 'angularApp'
       aggressivemode: true
-  - bash: |
-   sudo npm install -g handlebars-cmd
+  - script: |
+      sudo npm install -g handlebars-cmd
 
-   cat <<EOF > owaspzap/nunit-template.hbs
-   {{#each site}}
+      cat <<EOF > owaspzap/nunit-template.hbs
+      {{#each site}}
 
-   <test-run
+      <test-run
        id="2"
        name="Owasp test"
        start-time="{{../[@generated]}}"  >
@@ -38,14 +38,14 @@ steps:
                    </message>
                    <stack-trace>
                        <![CDATA[
-   Solution:
-   {{{solution}}}
+      Solution:
+      {{{solution}}}
 
-   Reference:
-   {{{reference}}}
+      Reference:
+      {{{reference}}}
 
-   instances:{{#each instances}}
-   * {{uri}}
+      instances:{{#each instances}}
+      * {{uri}}
        - {{method}}
        {{#if evidence}}- {{{evidence}}}{{/if}}
                        {{/each}}]]>
@@ -54,14 +54,14 @@ steps:
        </test-case>
        {{/each}}
        </test-suite>
-   </test-run>
-   {{/each}}
-   EOF
+      </test-run>
+      {{/each}}
+      EOF
   displayName: 'owasp nunit template'
   condition: always()
   - bash: ' handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
-  displayName: 'generate nunit type file'
-  condition: always()
+      displayName: 'generate nunit type file'
+      condition: always()
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results **/TEST-*.xml'
