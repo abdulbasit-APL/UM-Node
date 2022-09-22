@@ -110,6 +110,10 @@ stages:
         displayName: 'OWASP Dependency Check scan of third-party dependencies'
         steps:
         - template: ci/owasp.yml
+      - job: 'OWASP_Dependency_check'
+        displayName: 'OWASP cross-platform Dependency Checker'
+        steps:
+        - template: ci/x-plat.yml
   
   - stage: 'Build_Validation'
     displayName: 'External Validation'
