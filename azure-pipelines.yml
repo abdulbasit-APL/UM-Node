@@ -114,10 +114,10 @@ stages:
         displayName: 'OWASP cross-platform Dependency Checker'
         steps:
         - template: ci/x-plat.yml
-      #- job: 'owasp_zap_scan'
-      #  displayName: 'ZAP Scanner'
-      #  steps:
-      #  - template: ci/zap.yml
+      - job: 'owasp_zap_scan'
+        displayName: 'ZAP Scanner'
+        steps:
+        - template: ci/zapsec.yml
   
   - stage: 'Build_Validation'
     displayName: 'External Validation'
