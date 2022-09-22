@@ -1,82 +1,69 @@
 steps:
-- task: CSE-DevOps.zap-scanner.custom-build-release-task.owaspzap@1
-  displayName: 'ZAP Scanner'
-  inputs:
-    #scantype: targetedScan
-    #url: 'http://dev-korio.eastus.cloudapp.azure.com/'
-    aggressivemode: 'true'
-    projectName: 'angularApp'
+- task: owaspzap@1
+      inputs:
+        aggressivemode: true
+        threshold: '50'
+        projectName: 'angularApp'
+      displayName: 'Owasp Scan'
 
-- bash: |
-   sudo npm install -g handlebars-cmd
-   
-   cat <<EOF > owaspzap/nunit-template.hbs
-    
+    - bash: |
 
-    <test-run
-        id="2"
-        name="Owasp test"
-        start-time=""  >
-        <test-suite
-            id=""
-            type="Assembly"
-            name=""
-            result="Failed"
-            failed="">
-            <attachments>
-                <attachment>
-                    <filePath>owaspzap/report.html</filePath>
-                </attachment>
-            </attachments>
-        <test-case
-            id=""
-            name=""
-            result="Failed"
-            fullname=""
-            time="1">
-                <failure>
-                    <message>
-                        <![CDATA[}]]>
-                    </message>
-                    <stack-trace>
-                        <![CDATA[
-    Solution:
-    }
+        sudo npm install -g handlebars-cmd
+        sudo cat <<EOF > owaspzap/nunit-template.hbs
+        {{#each site}}
+        <test-run
+            id="2"
+            name="Owasp test"
+            start-time="{{../[@generated]}}"  >
+            <test-suite
+                id="{{@index}}"
+                type="Assembly"
+                name="{{[@name]}}"
+                result="Failed"
+                failed="{{alerts.length}}">
+                <attachments>
+                    <attachment>
+                        <filePath>owaspzap/report.html</filePath>
+                    </attachment>
+                </attachments>
+            {{#each alerts}}<test-case
+                id="{{@index}}"
+                name="{{alert}}"
+                result="Failed"
+                fullname="{{alert}}"
+                time="1">
+                    <failure>
+                            <message>
+                             <![CDATA[{{{desc}}}]]>
+                        </message>
+                        <stack-trace>
+                            <![CDATA[
+        Solution:
+        {{{solution}}}
+        Reference:
+        {{{reference}}}
+        instances:{{#each instances}}
+        * {{uri}}
+            - {{method}}
+            {{#if evidence}}- {{{evidence}}}{{/if}}
+                             {{/each}}]]>
+                         </stack-trace>
+                    </failure>
+            </test-case>
+            {{/each}}
+            </test-suite>
+        </test-run>
+        {{/each}}
+        EOF
+      displayName: 'Owasp Nunit Template'
 
-    Reference:
-    }
 
-    instances:
-    * 
-        - 
-        - }
-                        ]]>
-                    </stack-trace>
-                </failure>
-        </test-case>
-        
-        </test-suite>
-    </test-run>
-    
-    EOF
-  displayName: 'owasp nunit template'
+    - bash: 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
+      displayName: 'Generate Nunit type file'
 
-- bash: 'handlebars owaspzap/report.json <owaspzap/nunit-template.hbs> owaspzap/test-results.xml'
-  displayName: 'Bash Script'
 
-- task: PublishTestResults@2
-  displayName: 'Publish Test Results owaspzap/test-results.xml'
-  inputs:
-    testResultsFormat: NUnit
-    testResultsFiles: 'owaspzap/test-results.xml'
-
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
-  inputs:
-    SourceFolder: owaspzap/
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: zap-scanner-reports'
-  inputs:
-    ArtifactName: 'zap-scanner-reports'
+    - task: PublishTestResults@2
+      displayName: 'Publish Test Results'
+      inputs:
+        testResultsFormat: 'NUnit'
+        testResultsFiles: 'owaspzap/test-results.xml'    
