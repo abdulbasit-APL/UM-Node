@@ -55,15 +55,15 @@ steps:
         </test-run>
         {{/each}}
         EOF
-      displayName: 'Owasp Nunit Template'
+  displayName: 'Owasp Nunit Template'
 
 
-    - bash: 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
-      displayName: 'Generate Nunit type file'
+  - bash: 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
+    displayName: 'Generate Nunit type file'
 
 
-    - task: PublishTestResults@2
-      displayName: 'Publish Test Results'
-      inputs:
-        testResultsFormat: 'NUnit'
-        testResultsFiles: 'owaspzap/test-results.xml'
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: 'owaspzap/test-results.xml'
