@@ -1,20 +1,20 @@
 steps:
+- task: CSE-DevOps.zap-scanner.custom-build-release-task.owaspzap@1
+  displayName: 'ZAP Scanner'
+  inputs:
+    scantype: targetedScan
+    url: 'http://dev-korio.eastus.cloudapp.azure.com/'
 
-  - task: owaspzap@1
-    displayName: 'OWASP ZAP Scanner' # This task will perform security scan of third-party dependencies
-    inputs:
-      projectName: 'angularApp'
-      aggressivemode: true
-  - script: |
-      sudo npm install -g handlebars-cmd
-
-      cat <<EOF > owaspzap/nunit-template.hbs
-      {{#each site}}
-
-      <test-run
+- bash: |
+   sudo npm install -g handlebars-cmd
+   
+   cat <<EOF > owaspzap/nunit-template.hbs
+   {{#each site}}
+   
+   <test-run
        id="2"
        name="Owasp test"
-       start-time="{{../[@generated]}}"  >
+       start-time="{{../[@generated]}}" >
        <test-suite
            id="{{@index}}"
            type="Assembly"
@@ -38,14 +38,14 @@ steps:
                    </message>
                    <stack-trace>
                        <![CDATA[
-      Solution:
-      {{{solution}}}
-
-      Reference:
-      {{{reference}}}
-
-      instances:{{#each instances}}
-      * {{uri}}
+   Solution:
+   {{{solution}}}
+   
+   Reference:
+   {{{reference}}}
+   
+   instances:{{#each instances}}
+   * {{uri}}
        - {{method}}
        {{#if evidence}}- {{{evidence}}}{{/if}}
                        {{/each}}]]>
@@ -54,22 +54,27 @@ steps:
        </test-case>
        {{/each}}
        </test-suite>
-      </test-run>
-      {{/each}}
-      EOF
-    displayName: 'owasp nunit template'
-    condition: always()
-  
-  - script: |
-  #- script: 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
-      echo 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
-      displayName: 'generate nunit type file'
-      continueOnError: true
-      condition: always()
+   </test-run>
+   {{/each}}
+   
+  displayName: 'owasp nunit template'
 
-  - task: PublishTestResults@2
-    displayName: 'Publish Test Results **/TEST-*.xml'
-    inputs:
-      testResultsFormat: 'NUnit'
-      testResultsFiles: 'owaspzap/test-results.xml'
-    condition: always()
+- bash: 'handlebars owaspzap/report.json <owaspzap/nunit-template.hbs> owaspzap/test-results.xml'
+  displayName: 'Bash Script'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results owaspzap/test-results.xml'
+  inputs:
+    testResultsFormat: NUnit
+    testResultsFiles: 'owaspzap/test-results.xml'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    SourceFolder: owaspzap/
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: zap-scanner-reports'
+  inputs:
+    ArtifactName: 'zap-scanner-reports'
