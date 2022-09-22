@@ -6,5 +6,6 @@ steps:
       - script: |
           chmod -R 777  ./
           docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py \
-             -t https://www.example.com -g gen.conf -r testreport.html
-        displayName: super-linter validation
+             -t http://dev-korio.eastus.cloudapp.azure.com/ -g gen.conf -r testreport.html
+        displayName: OWASP ZAP Scan
+        continueOnError: true
