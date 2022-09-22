@@ -6,7 +6,7 @@ steps:
       #port: '<target_port>'
       displayName: 'Owasp Scan'
 
-    - bash: |
+  - bash: |
 
         sudo npm install -g handlebars-cmd
         sudo cat <<EOF > owaspzap/nunit-template.hbs
