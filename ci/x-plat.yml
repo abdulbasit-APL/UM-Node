@@ -1,0 +1,6 @@
+- task: OWASPDependencyCheck@0
+    inputs:
+      outputDirectory: '$(Agent.TempDirectory)/dependency-scan-results'
+      scanDirectory: '$(Build.SourcesDirectory)'
+      outputFormat: 'ALL'
+      useSonarQubeIntegration: true
