@@ -58,7 +58,7 @@ steps:
        </test-suite>
    </test-run>
    {{/each}}
-   
+   EOF
   displayName: 'owasp nunit template'
 
 - bash: 'handlebars owaspzap/report.json <owaspzap/nunit-template.hbs> owaspzap/test-results.xml'
