@@ -60,8 +60,8 @@ steps:
     displayName: 'owasp nunit template'
     condition: always()
   - bash: ' handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
-        displayName: 'generate nunit type file'
-        condition: always()
+    displayName: 'generate nunit type file'
+    condition: always()
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results **/TEST-*.xml'
