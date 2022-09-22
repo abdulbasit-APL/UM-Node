@@ -2,8 +2,10 @@ steps:
 - task: CSE-DevOps.zap-scanner.custom-build-release-task.owaspzap@1
   displayName: 'ZAP Scanner'
   inputs:
-    scantype: targetedScan
-    url: 'http://dev-korio.eastus.cloudapp.azure.com/'
+    #scantype: targetedScan
+    #url: 'http://dev-korio.eastus.cloudapp.azure.com/'
+    aggressivemode: 'true'
+    projectName: 'angularApp'
 
 - bash: |
    sudo npm install -g handlebars-cmd
