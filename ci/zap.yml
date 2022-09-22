@@ -1,9 +1,9 @@
 steps:
-- task: owaspzap@1
+  - task: owaspzap@1
       inputs:
         aggressivemode: true
         threshold: '50'
-        projectName: 'angularApp'
+        port: '<target_port>'
       displayName: 'Owasp Scan'
 
     - bash: |
@@ -66,4 +66,4 @@ steps:
       displayName: 'Publish Test Results'
       inputs:
         testResultsFormat: 'NUnit'
-        testResultsFiles: 'owaspzap/test-results.xml'    
+        testResultsFiles: 'owaspzap/test-results.xml'
