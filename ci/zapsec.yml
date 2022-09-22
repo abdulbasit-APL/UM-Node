@@ -1,7 +1,7 @@
 steps:
       - script: |
-          docker pull owasp/zap2docker    
-        displayName: Pull owasp/zap2docker docker image
+          docker pull owasp/zap2docker-stable    
+        displayName: Pull owasp/zap2docker-stable docker image
  
       - script: |
           chmod -R 777  ./
