@@ -6,7 +6,7 @@ steps:
       - script: |
           chmod -R 777  ./
           docker run -i owasp/zap2docker-stable zap-cli quick-scan --self-contained \
-          --start-options '-config api.disablekey=true' http://target
+          --start-options '-config api.disablekey=true' http://dev-korio.eastus.cloudapp.azure.com
           #docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py \
           #   -t http://dev-korio.eastus.cloudapp.azure.com/ -g gen.conf -r testreport.html
         displayName: OWASP ZAP Scan
