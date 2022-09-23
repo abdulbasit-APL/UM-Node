@@ -2,7 +2,7 @@
 trigger:
   branches:
     include:
-      #- main
+      - main
       #- master
       - release/*
 
@@ -56,25 +56,25 @@ stages:
         steps:
         - template: ci/WhiteSource.yml             
       
-      #- job: 'Snyk_Scan'
-      #  displayName: 'Snyk Report'
-      #  steps:
-      #  - template: ci/Snyk.yml
+      - job: 'Snyk_Scan'
+        displayName: 'Snyk Report'
+        steps:
+        - template: ci/Snyk.yml
   
-      #- job: 'Gitleak_Scan'
-      #  displayName: 'Gitleak Report'
-      #  steps:
-      #  - template: ci/gitleak.yml
+      - job: 'Gitleak_Scan'
+        displayName: 'Gitleak Report'
+        steps:
+        - template: ci/gitleak.yml
         
-      #- job: 'WebGoat_Test'
-      #  displayName: 'WebGoat Stats'
-      #  steps:
-      #  - template: ci/WebGoat.yml
+      - job: 'WebGoat_Test'
+        displayName: 'WebGoat Stats'
+        steps:
+        - template: ci/WebGoat.yml
       
-      #- job: 'lint_tests'
-      #  displayName: 'super-linter validation'
-      #  steps:
-      #  - template: ci/linter.yml
+      - job: 'lint_tests'
+        displayName: 'super-linter validation'
+        steps:
+        - template: ci/linter.yml
   
   #- stage: branch_policy_build_validation
   #  displayName: "Branch Policy Build Validation"
