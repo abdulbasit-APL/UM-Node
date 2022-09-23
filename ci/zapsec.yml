@@ -7,10 +7,8 @@ steps:
           chmod -R 777  ./
           docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py \
              -t http://dev-korio.eastus.cloudapp.azure.com/ -g gen.conf -r testreport.html
-          pwd
-          ls -al
         
-        displayName: OWASP ZAP Scan
+        displayName: 'OWASP ZAP Scan'
         continueOnError: true
       
       - task: PublishTestResults@2
