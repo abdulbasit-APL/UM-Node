@@ -162,14 +162,17 @@ stages:
     dependsOn: 'Deploy_to_Dev'
     #condition: succeeded('Build_Artifact')
     jobs:
-      - job: site_validation
+      - job: 'zap_scanner'
         displayName: 'ZAP Scanner'
         #pool: 'server'
         #timeoutInMinutes: 4320 # job times out in 3 days  
         steps:
         - template: ci/zapsec.yml
       
-      #- job:   
+      - job: 'beagle_scanner'
+        displayname: 'Beagle Scanner'
+        steps:
+        - templates: ci/beagle.yml
   
   - stage: 'Deploy_to_QA'
     displayName: 'QA Environment'
