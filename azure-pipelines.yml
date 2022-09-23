@@ -96,28 +96,22 @@ stages:
         steps:
         - template: ci/npm-ci.yml
       
-      #- job: 'OWASP_Scan'
-      #  displayName: 'OWASP Dependency Check scan of third-party dependencies'
-      #  steps:
-      #  - template: ci/owasp.yml
+      
   
   - stage: 'Post_Build_Scan'
     displayName: 'Post Build Scan'
     dependsOn: 'Build_Artifact'
     condition: succeeded('Build_Artifact')
     jobs:
-      #- job: 'OWASP_Scan'
-      #  displayName: 'OWASP Dependency Check scan of third-party dependencies'
-      #  steps:
-      #  - template: ci/owasp.yml
-      #- job: 'OWASP_Dependency_check'
-      #  displayName: 'OWASP cross-platform Dependency Checker'
-      #  steps:
-      #  - template: ci/x-plat.yml
-      - job: 'owasp_zap_scan'
-        displayName: 'ZAP Scanner'
+      - job: 'OWASP_Scan'
+        displayName: 'OWASP Dependency Check scan of third-party dependencies'
         steps:
-        - template: ci/zapsec.yml
+        - template: ci/owasp.yml
+      - job: 'OWASP_Dependency_check'
+        displayName: 'OWASP cross-platform Dependency Checker'
+        steps:
+        - template: ci/x-plat.yml
+      
   
   - stage: 'Build_Validation'
     displayName: 'External Validation'
@@ -150,12 +144,7 @@ stages:
           deploy:
              steps:
              - template: cd/dev.yml
-               #- task: DownloadPipelineArtifact@2
-               #  inputs:
-               #    runVersion: 'latest'
-               #    downloadPath: '$(System.DefaultWorkingDirectory)'
-               #    #targetPath: '$(System.DefaultWorkingDirectory)/$(webappname).zip'
-               #    targetPath: '$(Pipeline.Workspace)'
+               
              
   - stage: 'Site_Validation'
     displayName: 'After Deployment Site Validation'
@@ -170,9 +159,9 @@ stages:
         - template: ci/zapsec.yml
       
       - job: 'beagle_scanner'
-        displayname: 'Beagle Scanner'
+        displayName: 'Beagle Scanner'
         steps:
-        - templates: ci/beagle.yml
+        - template: ci/beagle.yml
   
   - stage: 'Deploy_to_QA'
     displayName: 'QA Environment'
