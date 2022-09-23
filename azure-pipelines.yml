@@ -163,7 +163,7 @@ stages:
     #condition: succeeded('Build_Artifact')
     jobs:
       - job: site_validation
-        displayName: ''ZAP Scanner''
+        displayName: 'ZAP Scanner'
         #pool: 'server'
         #timeoutInMinutes: 4320 # job times out in 3 days  
         steps:
