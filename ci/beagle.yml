@@ -1,0 +1,5 @@
+steps:
+          - task: BeagleSecurityTask@0
+            inputs:
+              accesskey: 'vxqggnfa8pk9cg0a8fow0mizsp0ltvy5'
+              applicationkey: 'as11bfzkulcahjm5k28qyh4fpqm500l1'
