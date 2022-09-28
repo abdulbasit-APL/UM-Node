@@ -4,6 +4,13 @@
     "description": "Korio",
     "main": "index.js",
     "scripts": {
+        "cy:open": "cypress open",
+        "cy:version": "cypress version",
+        "cy:run:headless": "cypress run",
+        "cy:run:chrome": "cypress run -b chrome",
+	    "cy:run:firefox": "cypress run -b firefox",
+	    "cy:run:edge": "cypress run -b edge",
+        "cy:run:record": "cypress run --record --key b80aa610-8ac4-4db6-a3a6-e100fa091018",
         "start": "node src/app.js",
         "dev": "nodemon src/app.js",
         "swagger-autogen": "node swagger.js",
@@ -28,6 +35,7 @@
         "passport": "^0.6.0",
         "passport-azure-ad": "^4.3.4",
         "prettier": "^2.7.1",
+        "cypress": "^4.5.0",
         "swagger-ui-express": "^4.5.0"
     },
     "devDependencies": {
